@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publications - Zhiang Chen</title>
+    <meta name="description" content="Academic publications and research papers by Zhiang Chen">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html">Zhiang Chen</a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="publications.html" class="active">Publications</a></li>
+                <li><a href="datasets.html">Datasets</a></li>
+                <li><a href="talks.html">Talks</a></li>
+                <li><a href="teaching.html">Teaching</a></li>
+                <li><a href="news.html">News</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Publications</h1>
+            <p>Academic publications, conference papers, and research contributions</p>
+        </div>
+    </section>
+
+    <!-- Publication Stats -->
+    <section class="publication-stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card clickable" data-filter="all">
+                    <div class="stat-number" id="total-count">0</div>
+                    <div class="stat-label">Total Publications</div>
+                </div>
+                <div class="stat-card clickable" data-filter="journals">
+                    <div class="stat-number" id="journal-count">0</div>
+                    <div class="stat-label">Journal Articles</div>
+                </div>
+                <div class="stat-card clickable" data-filter="conferences">
+                    <div class="stat-number" id="conference-count">0</div>
+                    <div class="stat-label">Peer-reviewed Conference</div>
+                </div>
+                <div class="stat-card clickable" data-filter="preprints">
+                    <div class="stat-number" id="preprint-count">0</div>
+                    <div class="stat-label">In Preparation</div>
+                </div>
+                <div class="stat-card clickable" data-filter="contributed">
+                    <div class="stat-number" id="contributed-count">0</div>
+                    <div class="stat-label">Contributed Papers</div>
+                </div>
+                <div class="stat-card clickable" data-filter="theses">
+                    <div class="stat-number" id="thesis-count">0</div>
+                    <div class="stat-label">Theses</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Publications Content -->
+    <section class="publications-content">
+        <div class="container">
+            <!-- Single Publications Container - will be populated by JavaScript -->
+            <div id="publications-container">
+                <!-- Publications will be dynamically inserted here -->
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Zhiang Chen</h3>
+                    <p>Postdoctoral Scholar</p>
+                    <p>California Institute of Technology & USGS</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="publications.html">Publications</a></li>
+                        <li><a href="projects.html">Research</a></li>
+                        <li><a href="datasets.html">Datasets</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect</h3>
+                    <div class="social-links">
+                        <a href="https://www.linkedin.com/in/zhiang-chen" target="_blank" class="social-link"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://scholar.google.com/citations?user=hohsNuYAAAAJ&hl=en" target="_blank" class="social-link"><i class="fab fa-google"></i></a>
+                        <a href="https://github.com/ZhiangChen" target="_blank" class="social-link"><i class="fab fa-github"></i></a>
+                        <a href="https://x.com/chen_zhiang" target="_blank" class="social-link"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Zhiang Chen. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/script.js"></script>
+</body>
+</html>

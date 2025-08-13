@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <title>Teaching & Mentorship - Zhiang Chen</title>
+    <meta name="description" content="Teaching experience, courses taught, and mentorship activities by Zhiang Chen">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html">Zhiang Chen</a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="publications.html">Publications</a></li>
+                <li><a href="datasets.html">Datasets</a></li>
+                <li><a href="talks.html">Talks</a></li>
+                <li><a href="teaching.html" class="active">Teaching</a></li>
+                <li><a href="news.html">News</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Teaching & Mentorship</h1>
+            <p>Courses taught, teaching philosophy, and mentorship activities</p>
+        </div>
+    </section>
+
+    <!-- Teaching Interests -->
+    <section class="teaching-interests">
+        <div class="container">
+            <h2 class="section-title">Teaching Interests</h2>
+            <div class="interests-content">
+                <p>I am committed to fostering a student-centered learning environment that emphasizes project-based learning, real-world problem-solving, and the integration of cutting-edge technology such as robotics and machine learning into geosciences education. I am particularly interested in teaching and developing courses on:</p>
+                <div class="courses-list">
+                    <div class="course-topic">
+                        <i class="fas fa-robot"></i>
+                        <span>Robotic Exploration in Geosciences</span>
+                    </div>
+                    <div class="course-topic">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <span>Natural Hazards</span>
+                    </div>
+                    <div class="course-topic">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Natural Hazard and Damage Assessment</span>
+                    </div>
+                    <div class="course-topic">
+                        <i class="fas fa-code"></i>
+                        <span>Programming for Geosciences</span>
+                    </div>
+                    <div class="course-topic">
+                        <i class="fas fa-brain"></i>
+                        <span>Applied Machine Learning for Earth Sciences</span>
+                    </div>
+                    <div class="course-topic">
+                        <i class="fas fa-satellite"></i>
+                        <span>Remote Sensing</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Teaching Gallery -->
+    <section class="teaching-gallery">
+        <div class="container">
+            <h2 class="section-title"> Gallery</h2>
+            <div class="gallery-content">
+                <div class="gallery-slider">
+                    <div class="gallery-track" id="galleryTrack">
+                        <div class="gallery-slide">
+                            <img src="assets/images/teaching/VR_teaching.png"" alt="Teaching Activity 1" class="gallery-img">
+                            <div class="slide-info">
+                                <h4>Virtual Reality Education</h4>
+                                <p>Innovative teaching methods using VR technology for immersive learning experiences</p>
+                            </div>
+                        </div>
+                        
+                        <div class="gallery-slide">
+                            <img src="assets/images/teaching/VR_teaching2.png" alt="Teaching Activity 2" class="gallery-img">
+                            <div class="slide-info">
+                                <h4>Virtual Reality Education</h4>
+                                <p>Teaching robotic exploration systems in Metaversity</p>
+                            </div>
+                        </div>
+                        
+                        <div class="gallery-slide">
+                            <img src="assets/images/teaching/FSRI.png" alt="Teaching Activity 3" class="gallery-img">
+                            <div class="slide-info">
+                                <h4>Caltech First-Year Success Research Institute</h4>
+                                <p>Ernest, Charles, Emily finished their projects successfully</p>
+                            </div>
+                        </div>
+                        
+                        <div class="gallery-slide">
+                            <img src="assets/images/teaching/rodney.png" alt="Teaching Activity 4" class="gallery-img">
+                            <div class="slide-info">
+                                <h4>Field Work</h4>
+                                <p>Mapping PBRs with Rodney</p>
+                            </div>
+                        </div>
+                        
+                        <div class="gallery-slide">
+                            <img src="assets/images/teaching/india_food.jpg" alt="Teaching Activity 5" class="gallery-img">
+                            <div class="slide-info">
+                                <h4>Group Lunch</h4>
+                                <p>Having lunch with Akshay and Deep</p>
+                            </div>
+                        </div>
+                        
+                        <div class="gallery-slide">
+                            <img src="assets/images/teaching6.jpg" alt="Teaching Activity 6" class="gallery-img">
+                            <div class="slide-info">
+                                <h4>Group Discussion</h4>
+                                <p>Interactive learning session with graduate students</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Navigation arrows -->
+                    <button class="gallery-nav gallery-prev" id="galleryPrev">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="gallery-nav gallery-next" id="galleryNext">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                    
+                    <!-- Dots indicator -->
+                    <div class="gallery-dots" id="galleryDots">
+                        <span class="dot active" data-slide="0"></span>
+                        <span class="dot" data-slide="1"></span>
+                        <span class="dot" data-slide="2"></span>
+                        <span class="dot" data-slide="3"></span>
+                        <span class="dot" data-slide="4"></span>
+                        <span class="dot" data-slide="5"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Teaching Experience -->
+    <section class="teaching-experience">
+        <div class="container">
+            <h2 class="section-title">Teaching</h2>
+            <div class="experience-timeline">
+                <div class="experience-item">
+                    <div class="experience-date">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Spring 2024</span>
+                    </div>
+                    <div class="experience-content">
+                        <h3>Guest Lecturer</h3>
+                        <h4>GEO 101 The Dynamic Earth</h4>
+                        <p class="institution">University of Alabama</p>
+                    </div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-date">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Summer 2023</span>
+                    </div>
+                    <div class="experience-content">
+                        <h3>Instructor</h3>
+                        <h4>Robotic Exploration Systems</h4>
+                        <p class="institution">Metavisionaries Academy</p>
+                        <p class="description">Taught robotic exploration systems in Metaversity (virtual-reality-based education). Worked with Dr. James Green (former NASA chief scientist).</p>
+                    </div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-date">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Spring 2023</span>
+                    </div>
+                    <div class="experience-content">
+                        <h3>Instructor</h3>
+                        <h4>SES 598 Autonomous Exploration Systems</h4>
+                        <p class="institution">Arizona State University</p>
+                    </div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-date">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Fall 2021</span>
+                    </div>
+                    <div class="experience-content">
+                        <h3>Guest Lecturer</h3>
+                        <h4>SES 230 Coding for Exploration</h4>
+                        <p class="institution">Arizona State University</p>
+                    </div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-date">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Fall 2020</span>
+                    </div>
+                    <div class="experience-content">
+                        <h3>Graduate Teaching Associate</h3>
+                        <h4>SES 230 Coding for Exploration</h4>
+                        <p class="institution">Arizona State University</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Educational Training -->
+    <section class="educational-training">
+        <div class="container">
+            <h2 class="section-title">Educational Training</h2>
+            <div class="training-grid">
+                <div class="training-item">
+                    <div class="training-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>GRD 593 Impacting Inequality: Inequities and Education</h3>
+                    <p class="training-institution">Arizona State University</p>
+                    <p class="training-date">Spring 2022</p>
+                </div>
+                
+                <div class="training-item">
+                    <div class="training-icon">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <h3>GRD 791 Preparing Future Faculty & Scholars</h3>
+                    <p class="training-institution">Arizona State University</p>
+                    <p class="training-date">Fall 2021</p>
+                </div>
+                
+                <div class="training-item">
+                    <div class="training-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h3>International Teaching Assistant Training</h3>
+                    <p class="training-institution">Arizona State University</p>
+                    <p class="training-date">Summer 2018</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mentorship -->
+    <section class="mentorship">
+        <div class="container">
+            <h2 class="section-title">Mentorship & Supervision</h2>
+            <div class="mentorship-content">
+                
+                <!-- Mentoring Programs -->
+                <div class="mentoring-programs">
+                    <h3>Mentoring Programs</h3>
+                    <div class="programs-list">
+                        <div class="program-item">
+                            <div class="program-icon">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <div class="program-content">
+                                <h4>Caltech Summer Undergraduate Research Fellowships (SURF) program</h4>
+                                <p class="program-date">Summer 2024</p>
+                            </div>
+                        </div>
+                        <div class="program-item">
+                            <div class="program-icon">
+                                <i class="fas fa-earth-americas"></i>
+                            </div>
+                            <div class="program-content">
+                                <h4>USGS Earthquake Science Center Internship program</h4>
+                                <p class="program-date">Summer 2024</p>
+                            </div>
+                        </div>
+                        <div class="program-item">
+                            <div class="program-icon">
+                                <i class="fas fa-link"></i>
+                            </div>
+                            <div class="program-content">
+                                <h4>Caltech Connection</h4>
+                                <p class="program-date">Fall 2023 - present</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Students Mentored -->
+                <div class="mentorship-grid">
+                    <div class="mentorship-category">
+                        <h3>Graduate Students</h3>
+                        <div class="mentee-list">
+                            <div class="mentee-item">
+                                <h4>Deep Rodge</h4>
+                                <p class="mentee-details">Master's student, Arizona State University</p>
+                            </div>
+                            <div class="mentee-item">
+                                <h4>Akshay Sopan Mahalle</h4>
+                                <p class="mentee-details">Master's student, Arizona State University</p>
+                            </div>
+                            <div class="mentee-item">
+                                <h4>Yash Shethwala</h4>
+                                <p class="mentee-details">Master's student, Arizona State University</p>
+                            </div>
+                            <div class="mentee-item">
+                                <h4>Aravind Adhith Pandian Saravanakumaran</h4>
+                                <p class="mentee-details">Master's student, Arizona State University</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mentorship-category">
+                        <h3>Undergraduate Students</h3>
+                        <div class="mentee-list">
+                            <div class="mentee-item">
+                                <h4>Emily Stanton</h4>
+                                <p class="mentee-details">California Institute of Technology</p>
+                            </div>
+                            <div class="mentee-item">
+                                <h4>Charles Williamson</h4>
+                                <p class="mentee-details">California Institute of Technology</p>
+                            </div>
+                            <div class="mentee-item">
+                                <h4>Ernest Adjetey</h4>
+                                <p class="mentee-details">California Institute of Technology</p>
+                            </div>
+                            <div class="mentee-item">
+                                <h4>Frank Xiao</h4>
+                                <p class="mentee-details">California Institute of Technology</p>
+                            </div>
+                            <div class="mentee-item">
+                                <h4>Yunha Jo</h4>
+                                <p class="mentee-details">California Institute of Technology</p>
+                            </div>
+                            <div class="mentee-item">
+                                <h4>Mark Hu</h4>
+                                <p class="mentee-details">California Institute of Technology</p>
+                            </div>
+                            <div class="mentee-item">
+                                <h4>Moira Iñiguez</h4>
+                                <p class="mentee-details">Compton College</p>
+                            </div>
+                            <div class="mentee-item">
+                                <h4>Emily Etheridge</h4>
+                                <p class="mentee-details">Marietta College</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mentorship-category">
+                        <h3>High School Students</h3>
+                        <div class="mentee-list">
+                            <div class="mentee-item">
+                                <h4>Jana Al Saif</h4>
+                                <p class="mentee-details">Safwa First Secondary School, Saudi Arabia</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Publications with Students -->
+                <div class="student-publications">
+                    <h3>Publications with Students</h3>
+                    <div class="publications-list">
+                        <div class="publication-item">
+                            <h4>Publication Title 1</h4>
+                            <p class="publication-authors">Student Name, <strong>Zhiang Chen</strong>, Other Authors</p>
+                            <p class="publication-venue">Journal/Conference Name, Year</p>
+                            <p class="publication-description">Brief description of the research collaboration and the student's contribution.</p>
+                        </div>
+                        
+                        <div class="publication-item">
+                            <h4>Publication Title 2</h4>
+                            <p class="publication-authors">Student Name, <strong>Zhiang Chen</strong>, Other Authors</p>
+                            <p class="publication-venue">Journal/Conference Name, Year</p>
+                            <p class="publication-description">Brief description of the research collaboration and the student's contribution.</p>
+                        </div>
+                        
+                        <div class="publication-item">
+                            <h4>Publication Title 3</h4>
+                            <p class="publication-authors">Student Name, <strong>Zhiang Chen</strong>, Other Authors</p>
+                            <p class="publication-venue">Journal/Conference Name, Year</p>
+                            <p class="publication-description">Brief description of the research collaboration and the student's contribution.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Zhiang Chen</h3>
+                    <p>Postdoctoral Scholar</p>
+                    <p>California Institute of Technology & USGS</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="publications.html">Publications</a></li>
+                        <li><a href="projects.html">Research</a></li>
+                        <li><a href="datasets.html">Datasets</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect</h3>
+                    <div class="social-links">
+                        <a href="https://www.linkedin.com/in/zhiang-chen" target="_blank" class="social-link"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://scholar.google.com/citations?user=hohsNuYAAAAJ&hl=en" target="_blank" class="social-link"><i class="fab fa-google"></i></a>
+                        <a href="https://github.com/ZhiangChen" target="_blank" class="social-link"><i class="fab fa-github"></i></a>
+                        <a href="https://x.com/chen_zhiang" target="_blank" class="social-link"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Zhiang Chen. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/script.js"></script>
+</body>
+</html>
