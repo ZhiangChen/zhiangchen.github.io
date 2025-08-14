@@ -366,6 +366,11 @@ section {
     padding: 4rem 0 2rem;
     margin-top: 4rem;
     position: relative;
+    /* Ensure consistent rendering across browsers and hosting environments */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    box-sizing: border-box;
 }
 
 .footer::before {
@@ -465,6 +470,11 @@ section {
     transition: all 0.3s ease;
     border: 1px solid #374151;
     font-size: 1.1rem;
+    /* Ensure icons display properly across all hosting environments */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands", sans-serif;
+    font-weight: 900;
 }
 
 .social-link:hover {
@@ -482,6 +492,16 @@ section {
     color: #9ca3af;
     font-size: 0.9rem;
     position: relative;
+    /* Ensure consistent rendering across browsers and hosting environments */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+.footer-bottom p {
+    margin: 0;
+    padding: 0;
+    line-height: 1.5;
 }
 
 .footer-bottom::before {
@@ -882,10 +902,21 @@ section {
     background: white;
 }
 
+.grants .container {
+    /* Ensure container works properly within grants section */
+    position: relative;
+    z-index: 1;
+}
+
 .grants-grid {
     display: flex;
     flex-direction: column;
     gap: 2rem;
+}
+
+/* Add margin fallback for browsers that don't support gap */
+.grant-card + .grant-card {
+    margin-top: 2rem;
 }
 
 .grant-card {
@@ -928,6 +959,10 @@ section {
 @media (max-width: 768px) {
     .grants-grid {
         gap: 1.5rem;
+    }
+    
+    .grant-card + .grant-card {
+        margin-top: 1.5rem;
     }
     
     .grant-card {
