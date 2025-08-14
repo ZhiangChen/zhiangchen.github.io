@@ -206,6 +206,16 @@ body {
     color: #1f2937;
 }
 
+.section-description {
+    text-align: center;
+    font-size: 1.1rem;
+    color: #6b7280;
+    margin-bottom: 3rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 section {
     padding: 5rem 0;
 }
@@ -909,15 +919,12 @@ section {
 }
 
 .grants-grid {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
 }
 
-/* Add margin fallback for browsers that don't support gap */
-.grant-card + .grant-card {
-    margin-top: 2rem;
-}
+/* Remove margin fallback since we're using grid */
 
 .grant-card {
     background: white;
@@ -958,11 +965,8 @@ section {
 /* Responsive Design for Grants */
 @media (max-width: 768px) {
     .grants-grid {
+        grid-template-columns: 1fr;
         gap: 1.5rem;
-    }
-    
-    .grant-card + .grant-card {
-        margin-top: 1.5rem;
     }
     
     .grant-card {
@@ -1247,11 +1251,11 @@ section {
 }
 
 .lecture-type {
-    background: #2563eb;
-    color: white;
+    background: #f3f4f6;
+    color: #6b7280;
     padding: 0.25rem 0.75rem;
     border-radius: 20px;
-    font-size: 0.75rem;
+    font-size: 0.9rem;
     font-weight: 500;
 }
 
@@ -2204,6 +2208,10 @@ section {
     text-align: center;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 140px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .stat-card.clickable {
@@ -2234,9 +2242,19 @@ section {
 }
 
 .stat-label {
-    font-size: 0.875rem;
+    font-size: 0.8rem;
     opacity: 0.9;
-    line-height: 1.2;
+    line-height: 1.1;
+    word-wrap: break-word;
+    hyphens: auto;
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stat-label-small {
+    font-size: 0.7rem;
 }
 
 /* GitHub Stats Specific Styles */
@@ -2525,8 +2543,8 @@ section {
 }
 
 .datasets-grid {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 2rem;
     margin-top: 2rem;
 }
@@ -2612,6 +2630,7 @@ section {
 /* Responsive design for datasets */
 @media (max-width: 768px) {
     .datasets-grid {
+        grid-template-columns: 1fr;
         gap: 1.5rem;
     }
     
