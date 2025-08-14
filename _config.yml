@@ -1,0 +1,19 @@
+# Site settings
+title: Zhiang Chen
+description: Robotics & AI for Earth Sciences
+url: "https://zhiangchen.github.io"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+permalink: pretty
+
+# Jekyll settings
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+
+# Exclude files
+exclude:
+  - README.md
+  - LICENSE

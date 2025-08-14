@@ -1504,8 +1504,8 @@ async function updateIndexPageStats() {
         // Function to count projects
         const projectsCount = await countProjects();
         
-        // Function to calculate grants total
-        const grantsTotal = await calculateGrantsTotal();
+        // Hardcoded grants total to avoid GitHub Pages CORS issues
+        const grantsTotal = 456; // Calculated from projects.html: $455,757 total
         
         // Update the statistics display with animation
         updateStatWithAnimation('Publications', publicationsCount);
@@ -1548,34 +1548,6 @@ async function countProjects() {
     } catch (error) {
         console.error('Error counting projects:', error);
         return 5; // Fallback value
-    }
-}
-
-// Calculate total grants amount from projects page
-async function calculateGrantsTotal() {
-    try {
-        const response = await fetch('projects.html');
-        const html = await response.text();
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, 'text/html');
-        
-        // Find all grant amounts
-        const grantAmounts = doc.querySelectorAll('.grant-amount');
-        let total = 0;
-        
-        grantAmounts.forEach(amount => {
-            const text = amount.textContent.replace(/[$,]/g, '');
-            const value = parseInt(text);
-            if (!isNaN(value)) {
-                total += value;
-            }
-        });
-        
-        // Convert to thousands and round
-        return Math.round(total / 1000);
-    } catch (error) {
-        console.error('Error calculating grants total:', error);
-        return 500; // Fallback value
     }
 }
 
@@ -1748,76 +1720,8 @@ function updateRecentNewsDisplay(newsItems) {
     });
 }
 
-// Load shared footer
-async function loadFooter() {
-    try {
-        const response = await fetch('includes/footer.html');
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const footerHTML = await response.text();
-        
-        // Find footer placeholder or create one
-        let footerContainer = document.getElementById('footer-container');
-        if (!footerContainer) {
-            // If no placeholder exists, append to body
-            footerContainer = document.createElement('div');
-            footerContainer.id = 'footer-container';
-            document.body.appendChild(footerContainer);
-        }
-        
-        footerContainer.innerHTML = footerHTML;
-    } catch (error) {
-        console.error('Error loading footer:', error);
-        
-        // Fallback: create footer directly if loading fails
-        createFallbackFooter();
-    }
-}
-
-// Fallback footer creation
-function createFallbackFooter() {
-    const footerContainer = document.getElementById('footer-container') || document.body;
-    const fallbackFooter = `
-        <footer class="footer">
-            <div class="container">
-                <div class="footer-content">
-                    <div class="footer-section">
-                        <h3>Zhiang Chen</h3>
-                        <p>Postdoctoral Scholar</p>
-                        <p>California Institute of Technology & USGS</p>
-                    </div>
-                    <div class="footer-section">
-                        <h3>Connect</h3>
-                        <div class="social-links">
-                            <a href="https://www.linkedin.com/in/zhiang-chen" target="_blank" class="social-link"><i class="fab fa-linkedin"></i></a>
-                            <a href="https://scholar.google.com/citations?user=hohsNuYAAAAJ&hl=en" target="_blank" class="social-link"><i class="fab fa-google"></i></a>
-                            <a href="https://github.com/ZhiangChen" target="_blank" class="social-link"><i class="fab fa-github"></i></a>
-                            <a href="https://x.com/chen_zhiang" target="_blank" class="social-link"><i class="fab fa-twitter"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="footer-bottom">
-                    <p>&copy; 2025 Zhiang Chen. All rights reserved.</p>
-                </div>
-            </div>
-        </footer>
-    `;
-    
-    if (footerContainer.id === 'footer-container') {
-        footerContainer.innerHTML = fallbackFooter;
-    } else {
-        footerContainer.insertAdjacentHTML('beforeend', fallbackFooter);
-    }
-}
-
 // Initialize stats update when page loads
 document.addEventListener('DOMContentLoaded', function() {
-    // Only load shared footer if we're NOT on the index page (which has its own footer)
-    if (!document.querySelector('.hero')) {
-        loadFooter();
-    }
-    
     // Check if we're on the index page
     if (document.querySelector('.about-stats') && document.querySelector('.hero')) {
         // Delay the update to allow page to load completely
