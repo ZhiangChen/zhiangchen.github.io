@@ -423,7 +423,17 @@ function showFeaturedReposErrorMessage() {
 const publicationsData = [
     // In Preparation
     {
-        year: 2025,
+        year: 2026,
+        title: "Virtual Shake Robot 2: Benchmarking Physics Engine for Overturning Precariously Balanced Rocks and Constraining Local Ground Motions",
+        authors: "Chen, Z., Mahalle, A., Saifullah, K., Das, J., Wittich, C., Kottke, A., Madugo, C., & Arrowsmith, R. (2026)",
+        journal: "Rock Mechanics and Rock Engineering. In prep",
+        abstract: "Benchmarking physics engines for accurate simulation of precariously balanced rock overturning dynamics and constraining local ground motion parameters.",
+        categories: ["preprint"],
+        status: "In Preparation",
+        links: []
+    },
+    {
+        year: 2026,
         title: "A Rapid Response System with Heterogeneous Multi-UAVs and Machine Learning for Mapping Earthquake Surface Fractures",
         authors: "Chen, Z., Rodriguez Padilla, A., Scharer, K., McPhillips, D., & Ross, Z. (2025)",
         journal: "In prep",
@@ -434,6 +444,26 @@ const publicationsData = [
     },
     {
         year: 2025,
+        title: "Rapid hazard assessment and prediction of post-fire debris flows using UAV lidar: Eaton Fire, California",
+        authors: "Chen, Z., Geyman, E., & Lamb, M. P. (2025)",
+        journal: "Landslides. Under review",
+        abstract: "Rapid hazard assessment and prediction methodology for post-fire debris flows using UAV-based lidar technology, applied to the Eaton Fire case study in California.",
+        categories: ["preprint"],
+        status: "Under Review",
+        links: []
+    },
+    {
+        year: 2025,
+        title: "3D Semantic Mapping of Surface Geological Features",
+        authors: "Chen, Z., McPhillips, D., Scharer, K., & Ross, Z. E. (2025)",
+        journal: "Computers & Geosciences. Under review",
+        abstract: "Development of 3D semantic mapping techniques for automated identification and characterization of surface geological features using advanced computer vision and machine learning approaches.",
+        categories: ["preprint"],
+        status: "Under Review",
+        links: []
+    },
+    {
+        year: 2026,
         title: "Mapping Precariously Balanced Rocks: Demonstrating A Target-oriented Mapping System for Unpiloted Aerial Vehicles",
         authors: "Chen, Z., Das, J., & Arrowsmith, R. (2025)",
         journal: "Journal of Field Robotics. In prep",
@@ -443,7 +473,7 @@ const publicationsData = [
         links: []
     },
     {
-        year: 2025,
+        year: 2026,
         title: "Improving Instance Segmentation Applications in Remote Sensing: Algorithms and Data Structures for Instances on Image Boundaries",
         authors: "Chen, Z., & Arrowsmith, R. (2025)",
         journal: "GIScience & Remote Sensing. In review",
@@ -1144,7 +1174,10 @@ document.addEventListener('DOMContentLoaded', function() {
         let html = '<div class="tab-content active">';
         
         sortedYears.forEach(year => {
-            const yearTitle = year === '2025' ? '2025 (In Preparation)' : year;
+            let yearTitle = year;
+            if (year === '2025' || year === '2026') {
+                yearTitle = `${year} (In Preparation)`;
+            }
             html += `<div class="year-group">
                         <h2 class="year-title">${yearTitle}</h2>`;
             
@@ -1465,7 +1498,7 @@ function initGallerySlider() {
 async function updateIndexPageStats() {
     try {
         // Hardcoded publications count to avoid GitHub Pages CORS issues
-        const publicationsCount = 28; // Based on publicationsData array count
+        const publicationsCount = 31; // Based on publicationsData array count
         
         // Function to count projects
         const projectsCount = await countProjects();
