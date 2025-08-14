@@ -1498,8 +1498,8 @@ function initGallerySlider() {
 // Dynamic Statistics Update for Index Page
 async function updateIndexPageStats() {
     try {
-        // Function to count publications
-        const publicationsCount = await countPublications();
+        // Hardcoded publications count to avoid GitHub Pages CORS issues
+        const publicationsCount = 28; // Based on publicationsData array count
         
         // Function to count projects
         const projectsCount = await countProjects();
@@ -1514,23 +1514,6 @@ async function updateIndexPageStats() {
         
     } catch (error) {
         console.error('Error updating index page stats:', error);
-    }
-}
-
-// Count publications from publications page
-async function countPublications() {
-    try {
-        const response = await fetch('publications.html');
-        const html = await response.text();
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, 'text/html');
-        
-        // Count publication cards
-        const publicationCards = doc.querySelectorAll('.publication-item, .publication-card');
-        return publicationCards.length;
-    } catch (error) {
-        console.error('Error counting publications:', error);
-        return 25; // Fallback value
     }
 }
 
@@ -1585,7 +1568,7 @@ function animateNumber(element, start, end, duration) {
         const easeOutQuart = 1 - Math.pow(1 - progress, 4);
         const current = Math.round(start + (range * easeOutQuart));
         
-        element.textContent = current + (current === end && end > 10 ? '+' : '');
+        element.textContent = current;
         
         if (progress < 1) {
             requestAnimationFrame(updateNumber);

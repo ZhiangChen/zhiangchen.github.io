@@ -2415,8 +2415,8 @@ section {
 }
 
 .repos-grid {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 2rem;
     margin-top: 2rem;
 }
@@ -2503,6 +2503,7 @@ section {
 /* Responsive design for repos */
 @media (max-width: 768px) {
     .repos-grid {
+        grid-template-columns: 1fr;
         gap: 1.5rem;
     }
     
