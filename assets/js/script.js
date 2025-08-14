@@ -1,5 +1,424 @@
 // Main JavaScript functionality for the research website
 
+// GitHub API functionality with caching
+async function fetchGitHubStats() {
+    const username = 'ZhiangChen';
+    const cacheKey = `github_stats_${username}`;
+    const cacheExpiry = 10 * 60 * 1000; // 10 minutes
+    
+    // Clear old cache that might have the wrong structure
+    localStorage.removeItem(cacheKey);
+    
+    // Check cache first
+    const cachedData = getCachedData(cacheKey, cacheExpiry);
+    if (cachedData && cachedData.organizations !== undefined) {
+        console.log('Using cached data:', cachedData);
+        updateGitHubStatsDisplay(cachedData);
+        return cachedData;
+    }
+    
+    // Add loading state
+    addLoadingState();
+    
+    try {
+        // Fetch user data
+        const userResponse = await fetch(`https://api.github.com/users/${username}`);
+        if (!userResponse.ok) {
+            throw new Error(`User API request failed: ${userResponse.status}`);
+        }
+        const userData = await userResponse.json();
+        
+        // Fetch repositories data
+        const reposResponse = await fetch(`https://api.github.com/users/${username}/repos?per_page=100`);
+        if (!reposResponse.ok) {
+            throw new Error(`Repos API request failed: ${reposResponse.status}`);
+        }
+        const reposData = await reposResponse.json();
+        
+        // Calculate stats
+        const stats = {
+            repositories: userData.public_repos || reposData.length,
+            stars: reposData.reduce((total, repo) => total + repo.stargazers_count, 0),
+            forks: reposData.reduce((total, repo) => total + repo.forks_count, 0),
+            organizations: 5  // Manually set to 5
+        };
+        
+        console.log('New stats:', stats);
+        
+        // Cache the data
+        setCachedData(cacheKey, stats);
+        
+        // Remove loading state and update the DOM
+        removeLoadingState();
+        updateGitHubStatsDisplay(stats);
+        
+        return stats;
+    } catch (error) {
+        console.error('Error fetching GitHub stats:', error);
+        removeLoadingState();
+        // Keep the existing static values if API fails
+        showErrorMessage();
+        return null;
+    }
+}
+
+// Cache management functions
+function getCachedData(key, maxAge) {
+    try {
+        const cached = localStorage.getItem(key);
+        if (cached) {
+            const data = JSON.parse(cached);
+            const now = Date.now();
+            if (now - data.timestamp < maxAge) {
+                return data.stats;
+            } else {
+                localStorage.removeItem(key);
+            }
+        }
+    } catch (error) {
+        console.error('Error reading from cache:', error);
+    }
+    return null;
+}
+
+function setCachedData(key, stats) {
+    try {
+        const data = {
+            stats: stats,
+            timestamp: Date.now()
+        };
+        localStorage.setItem(key, JSON.stringify(data));
+    } catch (error) {
+        console.error('Error writing to cache:', error);
+    }
+}
+
+function showErrorMessage() {
+    const statsSection = document.querySelector('.github-stats');
+    if (statsSection) {
+        // Create or update error message
+        let errorMsg = statsSection.querySelector('.api-error');
+        if (!errorMsg) {
+            errorMsg = document.createElement('p');
+            errorMsg.className = 'api-error';
+            errorMsg.style.textAlign = 'center';
+            errorMsg.style.color = 'rgba(255, 255, 255, 0.8)';
+            errorMsg.style.marginTop = '1rem';
+            errorMsg.style.fontSize = '0.9rem';
+            statsSection.querySelector('.container').appendChild(errorMsg);
+        }
+        errorMsg.textContent = 'Unable to fetch live data. Showing cached values.';
+    }
+}
+
+function addLoadingState() {
+    const statNumbers = document.querySelectorAll('.github-stats .stat-number');
+    statNumbers.forEach(number => {
+        number.classList.add('loading');
+    });
+}
+
+function removeLoadingState() {
+    const statNumbers = document.querySelectorAll('.github-stats .stat-number');
+    statNumbers.forEach(number => {
+        number.classList.remove('loading');
+    });
+}
+
+// Function to animate numbers counting up
+function animateNumber(element, finalNumber, duration = 1000) {
+    const startNumber = 0;
+    const increment = finalNumber / (duration / 16); // 60fps
+    let currentNumber = startNumber;
+    
+    const timer = setInterval(() => {
+        currentNumber += increment;
+        if (currentNumber >= finalNumber) {
+            currentNumber = finalNumber;
+            clearInterval(timer);
+        }
+        element.textContent = Math.floor(currentNumber);
+    }, 16);
+}
+
+// Enhanced GitHub stats update with animation
+function updateGitHubStatsDisplay(stats) {
+    console.log('Updating display with stats:', stats);
+    const statCards = document.querySelectorAll('.github-stats .stat-card');
+    console.log('Found stat cards:', statCards.length);
+    
+    if (statCards.length >= 5) {
+        // Animate GitHub-sourced numbers
+        console.log('Animating repositories:', stats.repositories);
+        animateNumber(statCards[0].querySelector('.stat-number'), stats.repositories);
+        
+        console.log('Animating stars:', stats.stars);
+        animateNumber(statCards[1].querySelector('.stat-number'), stats.stars);
+        
+        console.log('Animating forks:', stats.forks);
+        animateNumber(statCards[2].querySelector('.stat-number'), stats.forks);
+        
+        console.log('Animating organizations:', stats.organizations);
+        animateNumber(statCards[3].querySelector('.stat-number'), stats.organizations);
+        
+        // Also animate the datasets count (5th card) to maintain consistent styling
+        const datasetsNumber = parseInt(statCards[4].querySelector('.stat-number').textContent);
+        console.log('Animating datasets:', datasetsNumber);
+        animateNumber(statCards[4].querySelector('.stat-number'), datasetsNumber);
+    }
+}
+
+// Initialize when page loads - removed to consolidate with new function at end
+
+// Featured Repositories functionality
+async function fetchFeaturedRepositories() {
+    const username = 'ZhiangChen';
+    const featuredRepos = [
+        'shakebot',
+        'uav_motion', 
+        'gps_vio',
+        'deep_learning'
+    ];
+    
+    const cacheKey = `featured_repos_${username}`;
+    const cacheExpiry = 30 * 60 * 1000; // 30 minutes
+    
+    // Check cache first
+    const cachedData = getCachedData(cacheKey, cacheExpiry);
+    if (cachedData && Array.isArray(cachedData)) {
+        console.log('Using cached featured repos data:', cachedData);
+        updateFeaturedRepositoriesDisplay(cachedData);
+        return cachedData;
+    }
+    
+    // Add loading state
+    addFeaturedReposLoadingState();
+    
+    try {
+        const repoPromises = featuredRepos.map(async (repoName) => {
+            console.log(`Fetching repository: ${repoName}`);
+            const response = await fetch(`https://api.github.com/repos/${username}/${repoName}`);
+            console.log(`Response for ${repoName}:`, response.status, response.statusText);
+            
+            if (!response.ok) {
+                if (response.status === 403) {
+                    console.warn(`Rate limit exceeded for ${repoName}`);
+                } else if (response.status === 404) {
+                    console.warn(`Repository ${repoName} not found`);
+                } else {
+                    console.error(`Failed to fetch ${repoName}: ${response.status} ${response.statusText}`);
+                }
+                // Return fallback data for failed repos
+                return getFallbackRepoData(repoName);
+            }
+            return await response.json();
+        });
+        
+        const reposData = await Promise.all(repoPromises);
+        console.log('Fetched featured repos data:', reposData);
+        
+        // Filter out any null responses
+        const validReposData = reposData.filter(repo => repo !== null);
+        
+        if (validReposData.length === 0) {
+            throw new Error('No repositories could be fetched');
+        }
+        
+        // Cache the data
+        setCachedData(cacheKey, validReposData);
+        
+        // Remove loading state and update display
+        removeFeaturedReposLoadingState();
+        updateFeaturedRepositoriesDisplay(validReposData);
+        
+        return validReposData;
+    } catch (error) {
+        console.error('Error fetching featured repositories:', error);
+        removeFeaturedReposLoadingState();
+        
+        // Try to use fallback data instead of showing error
+        const fallbackData = getFallbackRepositoriesData();
+        updateFeaturedRepositoriesDisplay(fallbackData);
+        
+        return fallbackData;
+    }
+}
+
+// Fallback data for individual repositories
+function getFallbackRepoData(repoName) {
+    const fallbackRepos = {
+        'shakebot': {
+            name: 'shakebot',
+            description: 'A low-cost, open-sourced shake table for earthquake research and education. Provides affordable access to structural seismology research tools.',
+            html_url: 'https://github.com/ZhiangChen/shakebot',
+            stargazers_count: 0,
+            forks_count: 0,
+            language: 'Python',
+            topics: ['Arduino', 'Earthquake Research']
+        },
+        'uav_motion': {
+            name: 'uav_motion',
+            description: 'Minimum-snap trajectory generation and attitude control for PX4-based rotary wing drones.',
+            html_url: 'https://github.com/ZhiangChen/uav_motion',
+            stargazers_count: 29,
+            forks_count: 7,
+            language: 'C++',
+            topics: ['PX4', 'UAV Control']
+        },
+        'gps_vio': {
+            name: 'gps_vio',
+            description: 'Odometry Fusion of PX4 GPS and Realsense T265 VIO for improved localization accuracy.',
+            html_url: 'https://github.com/ZhiangChen/gps_vio',
+            stargazers_count: 28,
+            forks_count: 5,
+            language: 'C++',
+            topics: ['GPS', 'VIO']
+        },
+        'deep_learning': {
+            name: 'deep_learning',
+            description: 'Deep-learning approaches to object recognition from 3D data for geoscience applications.',
+            html_url: 'https://github.com/ZhiangChen/deep_learning',
+            stargazers_count: 19,
+            forks_count: 7,
+            language: 'Python',
+            topics: ['Deep Learning', '3D Vision']
+        }
+    };
+    
+    return fallbackRepos[repoName] || null;
+}
+
+// Complete fallback data for all repositories
+function getFallbackRepositoriesData() {
+    return [
+        {
+            name: 'shakebot',
+            description: 'A low-cost, open-sourced shake table for earthquake research and education. Provides affordable access to structural seismology research tools.',
+            html_url: 'https://github.com/ZhiangChen/shakebot',
+            stargazers_count: 0,
+            forks_count: 0,
+            language: 'Python',
+            topics: ['Arduino', 'Earthquake Research']
+        },
+        {
+            name: 'uav_motion',
+            description: 'Minimum-snap trajectory generation and attitude control for PX4-based rotary wing drones.',
+            html_url: 'https://github.com/ZhiangChen/uav_motion',
+            stargazers_count: 29,
+            forks_count: 7,
+            language: 'C++',
+            topics: ['PX4', 'UAV Control']
+        },
+        {
+            name: 'gps_vio',
+            description: 'Odometry Fusion of PX4 GPS and Realsense T265 VIO for improved localization accuracy.',
+            html_url: 'https://github.com/ZhiangChen/gps_vio',
+            stargazers_count: 28,
+            forks_count: 5,
+            language: 'C++',
+            topics: ['GPS', 'VIO']
+        },
+        {
+            name: 'deep_learning',
+            description: 'Deep-learning approaches to object recognition from 3D data for geoscience applications.',
+            html_url: 'https://github.com/ZhiangChen/deep_learning',
+            stargazers_count: 19,
+            forks_count: 7,
+            language: 'Python',
+            topics: ['Deep Learning', '3D Vision']
+        }
+    ];
+}
+
+function updateFeaturedRepositoriesDisplay(reposData) {
+    const reposGrid = document.querySelector('.repos-grid');
+    if (!reposGrid || !reposData) return;
+    
+    // Clear existing content
+    reposGrid.innerHTML = '';
+    
+    reposData.forEach(repo => {
+        const repoCard = createRepositoryCard(repo);
+        reposGrid.appendChild(repoCard);
+    });
+}
+
+function createRepositoryCard(repo) {
+    const card = document.createElement('div');
+    card.className = 'repo-card';
+    
+    // Get primary language and topics
+    const language = repo.language || 'Unknown';
+    const topics = repo.topics || [];
+    
+    // Format description
+    const description = repo.description || 'No description available.';
+    
+    // Create tags from language and topics
+    const tags = [language, ...topics.slice(0, 2)].filter(Boolean);
+    
+    card.innerHTML = `
+        <div class="repo-header">
+            <h3>${repo.name}</h3>
+            <div class="repo-stats">
+                <span class="repo-stat"><i class="fas fa-star"></i> ${repo.stargazers_count}</span>
+                <span class="repo-stat"><i class="fas fa-code-branch"></i> ${repo.forks_count}</span>
+            </div>
+        </div>
+        <p class="repo-description">${description}</p>
+        <div class="repo-tags">
+            ${tags.map(tag => `<span class="repo-tag">${tag}</span>`).join('')}
+        </div>
+        <div class="repo-links">
+            <a href="${repo.html_url}" target="_blank" class="repo-link">
+                <i class="fab fa-github"></i> View on GitHub
+            </a>
+            ${repo.homepage ? `<a href="${repo.homepage}" target="_blank" class="repo-link">
+                <i class="fas fa-external-link-alt"></i> Live Demo
+            </a>` : ''}
+            ${repo.has_wiki ? `<a href="${repo.html_url}/wiki" target="_blank" class="repo-link">
+                <i class="fas fa-book"></i> Documentation
+            </a>` : ''}
+        </div>
+    `;
+    
+    return card;
+}
+
+function addFeaturedReposLoadingState() {
+    const reposGrid = document.querySelector('.repos-grid');
+    if (reposGrid) {
+        reposGrid.classList.add('loading');
+        reposGrid.innerHTML = `
+            <div class="loading-message">
+                <i class="fas fa-spinner fa-spin"></i>
+                <p>Loading featured repositories...</p>
+            </div>
+        `;
+    }
+}
+
+function removeFeaturedReposLoadingState() {
+    const reposGrid = document.querySelector('.repos-grid');
+    if (reposGrid) {
+        reposGrid.classList.remove('loading');
+    }
+}
+
+function showFeaturedReposErrorMessage() {
+    const reposGrid = document.querySelector('.repos-grid');
+    if (reposGrid) {
+        // Since we now have fallback data, this function is less likely to be called
+        // But if it is, show a more user-friendly message
+        reposGrid.innerHTML = `
+            <div class="info-message">
+                <i class="fas fa-info-circle"></i>
+                <p>Showing cached repository information. Live data will be updated when available.</p>
+            </div>
+        `;
+    }
+}
+
 // Publications Data Structure - Single Source of Truth
 const publicationsData = [
     // In Preparation
@@ -42,7 +461,7 @@ const publicationsData = [
         journal: "2024 IEEE International Conference on Automation Science and Engineering",
         abstract: "Development of a low-cost, open-source shake table for earthquake research and education applications.",
         categories: ["conference"],
-        status: "Accepted",
+        status: "Published",
         links: []
     },
     {
@@ -582,9 +1001,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const totalCount = journalCount + conferenceCount + preprintCount + bookCount;
 
         // Update stats on publications page
-        const totalPubStat = document.querySelector('.publication-stats .stat-card:first-child .stat-number');
-        const journalStat = document.querySelector('.publication-stats .stat-card:nth-child(2) .stat-number');
-        const conferenceStat = document.querySelector('.publication-stats .stat-card:nth-child(3) .stat-number');
+        const totalPubStat = document.querySelector('.github-stats .stat-card:first-child .stat-number');
+        const journalStat = document.querySelector('.github-stats .stat-card:nth-child(2) .stat-number');
+        const conferenceStat = document.querySelector('.github-stats .stat-card:nth-child(3) .stat-number');
         
         if (totalPubStat) totalPubStat.textContent = totalCount;
         if (journalStat) journalStat.textContent = journalCount;
@@ -708,7 +1127,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function initializePublications() {
         // Check if we're on the publications page by looking for the publications container
         const container = document.getElementById('publications-container');
-        const publicationStats = document.querySelector('.publication-stats');
+        const publicationStats = document.querySelector('.github-stats') && document.getElementById('publications-container');
         
         // Return if neither the container nor stats section exist (not on publications page)
         if (!container && !publicationStats) return;
@@ -1075,3 +1494,343 @@ function initGallerySlider() {
     // Initialize
     updateSlider();
 }
+
+// Dynamic Statistics Update for Index Page
+async function updateIndexPageStats() {
+    try {
+        // Function to count publications
+        const publicationsCount = await countPublications();
+        
+        // Function to count projects
+        const projectsCount = await countProjects();
+        
+        // Function to calculate grants total
+        const grantsTotal = await calculateGrantsTotal();
+        
+        // Update the statistics display with animation
+        updateStatWithAnimation('Publications', publicationsCount);
+        updateStatWithAnimation('Active Projects', projectsCount);
+        updateStatWithAnimation('Research Grants', `$${grantsTotal}K+`);
+        
+    } catch (error) {
+        console.error('Error updating index page stats:', error);
+    }
+}
+
+// Count publications from publications page
+async function countPublications() {
+    try {
+        const response = await fetch('publications.html');
+        const html = await response.text();
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        
+        // Count publication cards
+        const publicationCards = doc.querySelectorAll('.publication-item, .publication-card');
+        return publicationCards.length;
+    } catch (error) {
+        console.error('Error counting publications:', error);
+        return 25; // Fallback value
+    }
+}
+
+// Count projects from projects page
+async function countProjects() {
+    try {
+        const response = await fetch('projects.html');
+        const html = await response.text();
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        
+        // Count project items
+        const projectItems = doc.querySelectorAll('.project-item');
+        return projectItems.length;
+    } catch (error) {
+        console.error('Error counting projects:', error);
+        return 5; // Fallback value
+    }
+}
+
+// Calculate total grants amount from projects page
+async function calculateGrantsTotal() {
+    try {
+        const response = await fetch('projects.html');
+        const html = await response.text();
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        
+        // Find all grant amounts
+        const grantAmounts = doc.querySelectorAll('.grant-amount');
+        let total = 0;
+        
+        grantAmounts.forEach(amount => {
+            const text = amount.textContent.replace(/[$,]/g, '');
+            const value = parseInt(text);
+            if (!isNaN(value)) {
+                total += value;
+            }
+        });
+        
+        // Convert to thousands and round
+        return Math.round(total / 1000);
+    } catch (error) {
+        console.error('Error calculating grants total:', error);
+        return 500; // Fallback value
+    }
+}
+
+// Update stat with animation
+function updateStatWithAnimation(statName, value) {
+    const statItems = document.querySelectorAll('.about-stats .stat-item');
+    
+    statItems.forEach(item => {
+        const h3 = item.querySelector('h3');
+        if (h3 && h3.textContent.includes(statName)) {
+            const numberElement = item.querySelector('.stat-number');
+            if (numberElement) {
+                // Animate number counting if it's numeric
+                if (typeof value === 'number') {
+                    animateNumber(numberElement, 0, value, 1500);
+                } else {
+                    // For non-numeric values (like "$500K+")
+                    numberElement.textContent = value;
+                }
+            }
+        }
+    });
+}
+
+// Animate number counting
+function animateNumber(element, start, end, duration) {
+    const startTime = Date.now();
+    const range = end - start;
+    
+    function updateNumber() {
+        const elapsed = Date.now() - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        
+        // Use easing function for smooth animation
+        const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+        const current = Math.round(start + (range * easeOutQuart));
+        
+        element.textContent = current + (current === end && end > 10 ? '+' : '');
+        
+        if (progress < 1) {
+            requestAnimationFrame(updateNumber);
+        }
+    }
+    
+    updateNumber();
+}
+
+// Enhanced GitHub stats display for datasets page
+function updateGitHubStatsDisplay(stats) {
+    const statNumbers = document.querySelectorAll('.stat-number');
+    const statLabels = ['GitHub Repositories', 'Stars', 'Forks', 'Organizations', 'Research Datasets'];
+    const values = [stats.repositories, stats.stars, stats.forks, stats.organizations, 5];
+    
+    statNumbers.forEach((numberElement, index) => {
+        if (index < values.length) {
+            animateNumber(numberElement, 0, values[index], 1500);
+        }
+    });
+}
+
+// Dynamic News Update for Index Page
+async function updateRecentNews() {
+    try {
+        const response = await fetch('news.html');
+        const html = await response.text();
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        
+        // Get all news cards
+        const newsCards = doc.querySelectorAll('.news-card');
+        
+        // Parse and sort news items by date
+        const newsItems = Array.from(newsCards).map(card => {
+            const date = card.querySelector('.news-date')?.textContent.trim() || '';
+            const title = card.querySelector('h3')?.textContent.trim() || '';
+            const excerpt = card.querySelector('.news-excerpt')?.textContent.trim() || '';
+            const link = card.querySelector('.news-link')?.href || 'news.html';
+            const linkText = card.querySelector('.news-link')?.textContent.trim() || 'Read More';
+            
+            return {
+                date,
+                title,
+                excerpt,
+                link,
+                linkText,
+                dateValue: parseDateForSorting(date)
+            };
+        }).filter(item => item.title); // Filter out empty items
+        
+        // Sort by date (newest first)
+        newsItems.sort((a, b) => b.dateValue - a.dateValue);
+        
+        // Take the three most recent
+        const recentNews = newsItems.slice(0, 3);
+        
+        // Update the Recent Highlights section
+        updateRecentNewsDisplay(recentNews);
+        
+    } catch (error) {
+        console.error('Error updating recent news:', error);
+    }
+}
+
+// Parse date strings for sorting
+function parseDateForSorting(dateStr) {
+    if (!dateStr) return new Date(0);
+    
+    // Handle different date formats
+    const currentYear = new Date().getFullYear();
+    
+    if (dateStr.includes('2025')) {
+        if (dateStr.toLowerCase().includes('summer')) return new Date(2025, 5, 1); // June 2025
+        if (dateStr.toLowerCase().includes('march')) return new Date(2025, 2, 1); // March 2025
+        return new Date(2025, 0, 1); // Default to January 2025
+    }
+    
+    if (dateStr.includes('2024')) {
+        if (dateStr.toLowerCase().includes('summer')) return new Date(2024, 5, 1); // June 2024
+        return new Date(2024, 0, 1); // Default to January 2024
+    }
+    
+    if (dateStr.includes('2023')) {
+        if (dateStr.toLowerCase().includes('november')) return new Date(2023, 10, 1); // November 2023
+        if (dateStr.toLowerCase().includes('october')) return new Date(2023, 9, 1); // October 2023
+        return new Date(2023, 0, 1); // Default to January 2023
+    }
+    
+    if (dateStr.includes('2022')) {
+        if (dateStr.toLowerCase().includes('october')) return new Date(2022, 9, 1); // October 2022
+        if (dateStr.toLowerCase().includes('may')) return new Date(2022, 4, 1); // May 2022
+        return new Date(2022, 0, 1); // Default to January 2022
+    }
+    
+    if (dateStr.includes('2021')) return new Date(2021, 0, 1);
+    if (dateStr.includes('2020')) return new Date(2020, 0, 1);
+    if (dateStr.includes('2017')) return new Date(2017, 0, 1);
+    if (dateStr.includes('2015')) return new Date(2015, 0, 1);
+    if (dateStr.includes('2014')) return new Date(2014, 0, 1);
+    
+    // For year-only dates, try to extract the year
+    const yearMatch = dateStr.match(/\b(20\d{2})\b/);
+    if (yearMatch) {
+        return new Date(parseInt(yearMatch[1]), 0, 1);
+    }
+    
+    return new Date(0); // Default to earliest date
+}
+
+// Update the Recent Highlights section with new news items
+function updateRecentNewsDisplay(newsItems) {
+    const newsGrid = document.querySelector('.recent-news .news-grid');
+    if (!newsGrid || newsItems.length === 0) return;
+    
+    // Clear existing content
+    newsGrid.innerHTML = '';
+    
+    // Add new news items
+    newsItems.forEach(item => {
+        const newsElement = document.createElement('div');
+        newsElement.className = 'news-item';
+        
+        newsElement.innerHTML = `
+            <div class="news-date">${item.date}</div>
+            <h3>${item.title}</h3>
+            <p>${item.excerpt}</p>
+            <a href="${item.link}" class="news-link">${item.linkText}</a>
+        `;
+        
+        newsGrid.appendChild(newsElement);
+    });
+}
+
+// Load shared footer
+async function loadFooter() {
+    try {
+        const response = await fetch('includes/footer.html');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const footerHTML = await response.text();
+        
+        // Find footer placeholder or create one
+        let footerContainer = document.getElementById('footer-container');
+        if (!footerContainer) {
+            // If no placeholder exists, append to body
+            footerContainer = document.createElement('div');
+            footerContainer.id = 'footer-container';
+            document.body.appendChild(footerContainer);
+        }
+        
+        footerContainer.innerHTML = footerHTML;
+    } catch (error) {
+        console.error('Error loading footer:', error);
+        
+        // Fallback: create footer directly if loading fails
+        createFallbackFooter();
+    }
+}
+
+// Fallback footer creation
+function createFallbackFooter() {
+    const footerContainer = document.getElementById('footer-container') || document.body;
+    const fallbackFooter = `
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-section">
+                        <h3>Zhiang Chen</h3>
+                        <p>Postdoctoral Scholar</p>
+                        <p>California Institute of Technology & USGS</p>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Connect</h3>
+                        <div class="social-links">
+                            <a href="https://www.linkedin.com/in/zhiang-chen" target="_blank" class="social-link"><i class="fab fa-linkedin"></i></a>
+                            <a href="https://scholar.google.com/citations?user=hohsNuYAAAAJ&hl=en" target="_blank" class="social-link"><i class="fab fa-google"></i></a>
+                            <a href="https://github.com/ZhiangChen" target="_blank" class="social-link"><i class="fab fa-github"></i></a>
+                            <a href="https://x.com/chen_zhiang" target="_blank" class="social-link"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2025 Zhiang Chen. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    `;
+    
+    if (footerContainer.id === 'footer-container') {
+        footerContainer.innerHTML = fallbackFooter;
+    } else {
+        footerContainer.insertAdjacentHTML('beforeend', fallbackFooter);
+    }
+}
+
+// Initialize stats update when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    // Only load shared footer if we're NOT on the index page (which has its own footer)
+    if (!document.querySelector('.hero')) {
+        loadFooter();
+    }
+    
+    // Check if we're on the index page
+    if (document.querySelector('.about-stats') && document.querySelector('.hero')) {
+        // Delay the update to allow page to load completely
+        setTimeout(updateIndexPageStats, 1000);
+        
+        // Update recent news if we're on the index page
+        if (document.querySelector('.recent-news')) {
+            setTimeout(updateRecentNews, 1200);
+        }
+    }
+    
+    // Only fetch GitHub stats if we're on the datasets page
+    if (document.querySelector('.github-stats') && document.querySelector('.featured-repos')) {
+        fetchGitHubStats();
+    }
+});
