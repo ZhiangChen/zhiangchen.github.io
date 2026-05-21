@@ -424,12 +424,22 @@ const publicationsData = [
     // In Preparation
     {
         year: 2026,
-        title: "Virtual Shake Robot 2: Benchmarking Physics Engine for Overturning Precariously Balanced Rocks and Constraining Local Ground Motions",
-        authors: "Chen, Z., Mahalle, A., Saifullah, K., Das, J., Wittich, C., Kottke, A., Madugo, C., & Arrowsmith, R. (2026)",
-        journal: "Rock Mechanics and Rock Engineering. In prep",
-        abstract: "Benchmarking physics engines for accurate simulation of precariously balanced rock overturning dynamics and constraining local ground motion parameters.",
+        title: "Mapping, Segmentation, and Geometric Analysis of Freestanding Rocks",
+        authors: "Chen, Z., Rodge, D., Kottke, A., Madugo, C., & Arrowsmith, R. (2026)",
+        journal: "Computers & Geosciences. Under review",
+        abstract: "Mapping, segmentation, and geometric analysis workflows for freestanding rocks, with applications to quantitative geomorphic and seismic studies.",
         categories: ["preprint"],
-        status: "In Preparation",
+        status: "Under Review",
+        links: []
+    },
+    {
+        year: 2026,
+        title: "Physics-Engine Simulation of Precariously Balanced Rocks: Calibration, Benchmarking, and Scalable Seismic Fragility Modeling",
+        authors: "Chen, Z., Mahalle, A., Saifullah, K., Wittich, C., Das, J., Madugo, C., Kottke, A., & Arrowsmith, R. (2026)",
+        journal: "Seismica. Under review",
+        abstract: "Physics-engine simulation of precariously balanced rocks for calibration, benchmarking, and scalable seismic fragility modeling.",
+        categories: ["preprint"],
+        status: "Under Review",
         links: []
     },
     {
@@ -443,24 +453,28 @@ const publicationsData = [
         links: []
     },
     {
-        year: 2025,
-        title: "Rapid hazard assessment and prediction of post-fire debris flows using UAV lidar: Eaton Fire, California",
-        authors: "Chen, Z., Geyman, E., & Lamb, M. P. (2025)",
-        journal: "Landslides. Under review",
-        abstract: "Rapid hazard assessment and prediction methodology for post-fire debris flows using UAV-based lidar technology, applied to the Eaton Fire case study in California.",
-        categories: ["preprint"],
-        status: "Under Review",
-        links: []
+        year: 2026,
+        title: "Rapid hazard prediction and assessment of post-fire debris flows using UAV lidar: Eaton Fire, California",
+        authors: "Chen, Z., Geyman, E. C., & Lamb, M. P. (2026)",
+        journal: "Landslides. Technical Note",
+        abstract: "Rapid hazard prediction and assessment of post-fire debris flows using UAV lidar, with applications to the Eaton Fire in California.",
+        categories: ["journal"],
+        status: "Published",
+        links: [
+            { type: "DOI", url: "https://doi.org/10.1007/s10346-026-02694-0", icon: "fas fa-external-link-alt" }
+        ]
     },
     {
-        year: 2025,
-        title: "3D Semantic Mapping of Surface Geological Features",
-        authors: "Chen, Z., McPhillips, D., Scharer, K., & Ross, Z. E. (2025)",
-        journal: "Computers & Geosciences. Under review",
-        abstract: "Development of 3D semantic mapping techniques for automated identification and characterization of surface geological features using advanced computer vision and machine learning approaches.",
-        categories: ["preprint"],
-        status: "Under Review",
-        links: []
+        year: 2026,
+        title: "3D semantic mapping of surface geological features",
+        authors: "Chen, Z., McPhillips, D., Scharer, K., & Ross, Z. E. (2026)",
+        journal: "Computers & Geosciences, 213, 106181",
+        abstract: "A scalable pipeline for 3D semantic mapping of surface geological features using Structure-from-Motion, large vision models, and a segmentation mosaicking workflow.",
+        categories: ["journal"],
+        status: "Published",
+        links: [
+            { type: "DOI", url: "https://doi.org/10.1016/j.cageo.2026.106181", icon: "fas fa-external-link-alt" }
+        ]
     },
     {
         year: 2026,
@@ -476,33 +490,37 @@ const publicationsData = [
         year: 2026,
         title: "Improving Instance Segmentation Applications in Remote Sensing: Algorithms and Data Structures for Instances on Image Boundaries",
         authors: "Chen, Z., & Arrowsmith, R. (2025)",
-        journal: "GIScience & Remote Sensing. In review",
+        journal: "GIScience & Remote Sensing. In prep",
         abstract: "Novel algorithms and data structures for handling instances on image boundaries in remote sensing applications.",
         categories: ["preprint"],
-        status: "In Review",
+        status: "In Preparation",
         links: []
     },
     
     // Peer-reviewed Publications
     {
         year: 2024,
-        title: "Shakebot: A Low-cost, Open-sourced Shake Table for Earthquake Research and Education",
-        authors: "Chen, Z., Keating, D., Shethwala, Y., Pandian Saravanakumaran, A., Arrowsmith, R., Kottke, A., Wittich, C., & Das, J. (2024)",
-        journal: "2024 IEEE International Conference on Automation Science and Engineering",
+        title: "Shakebot: A Low-cost, Open-source Robotic Shake Table for Earthquake Research and Education",
+        authors: "Chen, Z., Keating, D., Shethwala, Y., Pandian Saravanakumaran, A. A., Arrowsmith, R., Kottke, A., Wittich, C., & Das, J. (2024)",
+        journal: "2024 IEEE 20th International Conference on Automation Science and Engineering (CASE 2024), 488-495",
         abstract: "Development of a low-cost, open-source shake table for earthquake research and education applications.",
         categories: ["conference"],
         status: "Published",
-        links: []
+        links: [
+            { type: "DOI", url: "https://doi.org/10.1109/CASE59546.2024.10711613", icon: "fas fa-external-link-alt" }
+        ]
     },
     {
         year: 2024,
         title: "Virtual Shake Robot: Simulating Dynamics of Precariously Balanced Rocks for Overturning and Large-displacement Processes",
         authors: "Chen, Z., Arrowsmith, R., Das, J., Wittich, C., Madugo, C., & Kottke, A. (2024)",
-        journal: "Seismica. 3(1)",
+        journal: "Seismica, 3(1)",
         abstract: "Simulation of precariously balanced rock dynamics for overturning and large-displacement processes using virtual shake robot technology.",
         categories: ["journal"],
         status: "Published",
-        links: []
+        links: [
+            { type: "DOI", url: "https://doi.org/10.26443/seismica.v3i1.692", icon: "fas fa-external-link-alt" }
+        ]
     },
     {
         year: 2023,
@@ -1174,14 +1192,16 @@ document.addEventListener('DOMContentLoaded', function() {
         let html = '<div class="tab-content active">';
         
         sortedYears.forEach(year => {
+            const yearPublications = publicationsByYear[year];
             let yearTitle = year;
-            if (year === '2025' || year === '2026') {
-                yearTitle = `${year} (In Preparation)`;
+            const hasOnlyPreprints = yearPublications.every(pub => pub.categories.includes("preprint"));
+            if (hasOnlyPreprints) {
+                yearTitle = year + " (In Preparation)";
             }
-            html += `<div class="year-group">
-                        <h2 class="year-title">${yearTitle}</h2>`;
+            html += '<div class="year-group">\n                        <h2 class="year-title">' + yearTitle + '</h2>';
+
             
-            publicationsByYear[year].forEach(pub => {
+            yearPublications.forEach(pub => {
                 html += generatePublicationHTML(pub);
             });
             
@@ -1498,7 +1518,7 @@ function initGallerySlider() {
 async function updateIndexPageStats() {
     try {
         // Hardcoded publications count to avoid GitHub Pages CORS issues
-        const publicationsCount = 31; // Based on publicationsData array count
+        const publicationsCount = publicationsData.length;
         
         // Function to count projects
         const projectsCount = await countProjects();
