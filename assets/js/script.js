@@ -848,6 +848,12 @@ document.addEventListener('DOMContentLoaded', function() {
         const dateText = dateElement.textContent.trim();
         
         // Handle different date formats
+        if (dateText.includes('2026')) {
+            if (dateText.includes('July')) return new Date(2026, 6, 1); // July 2026
+            if (dateText.includes('February')) return new Date(2026, 1, 1); // February 2026
+            return new Date(2026, 0, 1); // Default to January 2026
+        }
+
         if (dateText.includes('2025')) {
             if (dateText.includes('Summer')) return new Date(2025, 5, 1); // June 2025
             if (dateText.includes('March')) return new Date(2025, 2, 1); // March 2025
